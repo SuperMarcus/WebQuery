@@ -14,14 +14,6 @@
  *
  */
 
-class WebQuery{
-    private $socket;
-
-    public function __construct($address, $port){
-        putmsg("Connecting server: ".$address.":".$port);
-        $this->socket = new QuerySocket($address, $port);
-        if($this->socket->openStream() == 0){
-
-        }
-    }
+function putmsg($msg, $type = "p", $bar = true){
+    echo "<".$type.">".$msg."</".$type.">".($bar ? "<bar>" : "");
 }

@@ -14,7 +14,8 @@
  *
  */
 
-require(__DIR__."classes".DIRECTORY_SEPARATOR."WebQuery.class.php");
+require(__DIR__."functions.php");
+require(__DIR__."classes/WebQuery.class.php");
 
 if(!isset($_POST['host']) or !isset($_POST['port'])){
     echo "Bad post.";
@@ -30,17 +31,17 @@ $address = $_POST['host'];
 $port = $_POST['port'];
 
 if(!isset($address)){
-    echo "<P>Please input server address.</p><br>";
+    putmsg("Please input server address.");
     $error++;
 }
 
 if(!isset($port)){
-    echo "<p>Please input server port.</p><br>";
+    putmsg("Please input server port.");
     $error++;
 }
 
 if($error > 0){
-    echo "<p>Please check all the arguments and try again.</p><br>";
+    putmsg("Please check all the args and try again.");
 }
 
 $query = new WebQuery($address, $port);

@@ -20,10 +20,23 @@ class QuerySocket{
     public function __construct($address, $port){
         $this->address = $address;
         $this->port = $port;
-        $this->openStream();
     }
 
     public function openStream(){
-        $this->socket = @fsockopen("udp://".$this->address, $this->port);
+        $errno = 0;
+        $errstr = "";
+        $this->socket = @fsockopen("udp://".$this->address, $this->port, $errno, $errstr, 5);
+        if(!$this->socket){
+            if($errno == 0){
+                putmsg("Could not create socket connection. [Internal error]");
+                return -1;
+            }
+            putmsg("Could not create socket connection. [Socket returned an error code ".$errno."]");
+            return $errno;
+        }
+        stream_set_timeout($this->socket, 5);
+        stream_set_blocking($this->socket, true);
+
+        return 0;
     }
 }
